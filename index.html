@@ -1,0 +1,2723 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="riso">
+  <title>Путівник з інформатики для 6 класу — повний інтерактивний курс</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Riso) */
+      --background: #f7f3ea;
+      --surface-container-low: #ffffff;
+      --surface-container: #efe8d8;
+      --surface-container-high: #fff8b3;
+
+      /* Ink */
+      --on-surface: #1d2a5a;
+      --on-surface-variant: #3d4775;
+
+      /* Rules */
+      --outline: #1d2a5a;
+      --outline-variant: #c3c6d9;
+
+      /* Accents */
+      --primary: #006aa8;
+      --on-primary: #ffffff;
+      --primary-container: #ffe800;
+      --on-primary-container: #1d2a5a;
+      --secondary: #ff52b4;
+      --tertiary: #d00074;
+      --error: #c0262d;
+      --on-error: #ffffff;
+
+      /* Data series */
+      --data-1: #0078bf;
+      --data-2: #d00074;
+      --data-3: #1d2a5a;
+      --data-4: #d9531e;
+      --data-context: #b4b8cc;
+
+      /* Fonts (Cyrillic-first with Riso voice) */
+      --font-headline: 'Montserrat', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-label: 'IBM Plex Mono', monospace;
+
+      /* Shape */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.5rem;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --misregister: 3px 2px 0 rgb(255 82 180 / 0.85);
+      --ink-border: 2px solid var(--outline);
+      --ink-border-subtle: 1px solid var(--outline-variant);
+      --offset-pink: 5px 5px 0 var(--secondary);
+      --offset-blue: 5px 5px 0 var(--primary);
+      --offset-sm: 3px 3px 0 var(--primary);
+      --offset-sm-pink: 3px 3px 0 var(--secondary);
+      --halftone: radial-gradient(rgb(29 42 90 / 0.07) 1px, transparent 1.2px);
+      --halftone-size: 6px 6px;
+
+      /* Semantic */
+      --positive: #0f766e;
+      --on-positive: #ffffff;
+      --positive-bg: #e6f4f1;
+      --warning: #9a5b00;
+      --error-bg: #fdeaea;
+
+      /* Focus ring */
+      --focus: #006aa8;
+
+      /* Type scale (Narrative) */
+      --display-size: clamp(2.15rem, 1.3rem + 3.2vw, 3.85rem);
+      --headline-size: clamp(1.55rem, 1.15rem + 1.6vw, 2.25rem);
+      --subhead-size: clamp(1.15rem, 1.02rem + 0.5vw, 1.4rem);
+      --body-size: clamp(1.0625rem, 1rem + 0.2vw, 1.125rem);
+      --label-size: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+    header { position: static !important; }
+
+    body {
+      background-color: var(--background);
+      background-image: var(--halftone);
+      background-size: var(--halftone-size);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 270px) minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+      max-width: 1240px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Sidebar TOC */
+    .toc-aside {
+      position: sticky;
+      top: var(--space-lg);
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-blue);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .toc-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface);
+      margin: 0;
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--ink-border);
+    }
+
+    .toc-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .toc-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      border-radius: var(--rounded);
+      text-decoration: none;
+      color: var(--on-surface);
+      font-size: 0.9rem;
+      font-weight: 600;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .toc-link:hover, .toc-link.is-active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    .toc-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: 2px 6px;
+      border-radius: var(--rounded);
+      flex-shrink: 0;
+    }
+
+    .toc-progress-box {
+      padding-top: var(--space-sm);
+      border-top: var(--ink-border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: var(--surface-container);
+      border: var(--ink-border);
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Main Column */
+    .main-flow {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xl);
+    }
+
+    /* Hero / Header */
+    .hero-header {
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-pink);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .stamp-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--primary);
+      color: var(--on-primary);
+      border-radius: var(--rounded-full);
+      padding: var(--space-xs) var(--space-md);
+      line-height: 1.3;
+    }
+
+    .stamp--yellow {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border: var(--ink-border);
+    }
+
+    .misregister {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+      text-shadow: var(--misregister);
+      margin: 0;
+    }
+
+    .hero-title {
+      font-size: var(--display-size);
+      line-height: 1.03;
+    }
+
+    .hero-lede {
+      font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+      color: var(--on-surface-variant);
+      max-width: 65ch;
+      margin: 0;
+    }
+
+    /* Mobile quick nav */
+    .mobile-jump-nav {
+      display: none;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-sm);
+    }
+
+    .mobile-jump-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--on-surface);
+      background: var(--surface-container-high);
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      text-decoration: none;
+    }
+
+    /* Key Figures Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(185px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+
+    .ink-block {
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-pink);
+      padding: var(--space-lg);
+    }
+
+    .ink-block--alt {
+      background: var(--surface-container-high);
+      box-shadow: var(--offset-blue);
+    }
+
+    .kpi-tile {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+
+    .kpi-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--on-surface-variant);
+    }
+
+    .kpi-value {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(1.85rem, 1.4rem + 1.4vw, 2.5rem);
+      line-height: 1.05;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-surface);
+    }
+
+    .kpi-note {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--tertiary);
+    }
+
+    /* Chapter Sections */
+    .chapter-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: var(--ink-border);
+      scroll-margin-top: var(--space-lg);
+    }
+
+    .chapter-header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .chapter-heading {
+      font-size: var(--headline-size);
+      line-height: 1.08;
+    }
+
+    .chapter-intro {
+      max-width: 65ch;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Topic Card */
+    .topic-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .topic-card {
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-pink);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .topic-card:nth-child(even) {
+      background: var(--surface-container-high);
+      box-shadow: var(--offset-blue);
+    }
+
+    .topic-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--ink-border-subtle);
+    }
+
+    .topic-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .topic-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--tertiary);
+    }
+
+    .topic-title {
+      font-family: var(--font-headline);
+      font-weight: 800;
+      font-size: var(--subhead-size);
+      line-height: 1.2;
+      color: var(--on-surface);
+      margin: 0;
+    }
+
+    /* Topic completion button */
+    .done-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      box-shadow: var(--offset-sm);
+      cursor: pointer;
+      transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .done-btn:hover {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--primary);
+    }
+
+    .done-btn.is-done {
+      background: var(--positive);
+      color: var(--on-positive);
+      box-shadow: var(--offset-sm);
+    }
+
+    /* Card interior grid via container queries */
+    .card-wrapper { container-type: inline-size; }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    @container (min-width: 660px) {
+      .topic-grid--split {
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      }
+    }
+
+    .prose-col p {
+      margin: 0 0 var(--space-sm);
+      max-width: 65ch;
+    }
+
+    .prose-col p:last-child {
+      margin-bottom: 0;
+    }
+
+    .prose-col ul, .prose-col ol {
+      margin: var(--space-sm) 0;
+      padding-left: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .highlight-flood {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      padding: 1px 5px;
+      font-weight: 600;
+      border-radius: var(--rounded);
+    }
+
+    .callout-box {
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-left: 6px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .callout-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    /* Tables */
+    .table-scroll {
+      overflow-x: auto;
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+
+    th {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--ink-border);
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--ink-border-subtle);
+      vertical-align: top;
+    }
+
+    tr.row-highlight td {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+    }
+
+    /* Collapsible practical assignments */
+    details.practice-drawer {
+      background: var(--surface-container);
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    details.practice-drawer summary {
+      cursor: pointer;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--on-surface);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      list-style: none;
+    }
+
+    details.practice-drawer summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .practice-body {
+      padding-top: var(--space-sm);
+      border-top: var(--ink-border-subtle);
+      margin-top: var(--space-xs);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      font-size: 0.95rem;
+    }
+
+    /* Riso Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn--primary {
+      background: var(--secondary);
+      color: var(--on-surface);
+      box-shadow: var(--offset-sm);
+    }
+
+    .btn--primary:hover {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--primary);
+    }
+
+    .btn--secondary {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      box-shadow: var(--offset-sm);
+    }
+
+    .btn--secondary:hover {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--primary);
+    }
+
+    .btn--outline {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      box-shadow: var(--offset-sm);
+    }
+
+    .btn--outline:hover {
+      background: var(--surface-container);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    /* Inputs & Form controls */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .field-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--on-surface);
+    }
+
+    .riso-input, .riso-select {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      font-size: 1rem;
+    }
+
+    .riso-select {
+      padding-right: var(--space-xl);
+    }
+
+    .riso-input:focus-visible, .riso-select:focus-visible {
+      box-shadow: var(--offset-sm);
+    }
+
+    /* Interactive Labs inside Chapters */
+    .lab-panel {
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-blue);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .lab-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+      gap: var(--space-md);
+      align-items: end;
+    }
+
+    .audit-result {
+      padding: var(--space-md);
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .audit-result.is-good {
+      background: var(--positive-bg);
+    }
+
+    .audit-result.is-warn {
+      background: var(--surface-container-high);
+    }
+
+    .audit-result.is-bad {
+      background: var(--error-bg);
+    }
+
+    /* Packet Simulator */
+    .packet-viz {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+
+    .packet-part {
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+    }
+
+    .packet-part--head { background: var(--primary-container); }
+    .packet-part--trail { background: var(--surface-container); }
+
+    /* Scratch Stage SVG */
+    .scratch-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .scratch-stage-wrap {
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      padding: var(--space-sm);
+    }
+
+    .scratch-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Overprint SVG chart */
+    .chart-wrap {
+      width: 100%;
+      min-height: 220px;
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      padding: var(--space-md);
+    }
+
+    .chart-mark {
+      mix-blend-mode: multiply;
+    }
+
+    /* Flashcards Section */
+    .flashcard-stage {
+      perspective: 1000px;
+    }
+
+    .flashcard-box {
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-pink);
+      padding: var(--space-xl);
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-lg);
+      cursor: pointer;
+      transition: background-color var(--dur-short) var(--ease-in-out), box-shadow var(--dur-short) var(--ease-in-out);
+    }
+
+    .flashcard-box.is-flipped {
+      background: var(--surface-container-high);
+      box-shadow: var(--offset-blue);
+    }
+
+    .flashcard-term {
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.2rem);
+      color: var(--primary);
+      line-height: 1.15;
+    }
+
+    .flashcard-def {
+      font-size: 1.125rem;
+      line-height: 1.55;
+      color: var(--on-surface);
+      max-width: 60ch;
+    }
+
+    /* Quiz Section */
+    .quiz-card {
+      background: var(--surface-container-low);
+      border: var(--ink-border);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--offset-blue);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      min-height: 48px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .quiz-option:hover:not(:disabled) {
+      background: var(--surface-container);
+      transform: translateX(2px);
+    }
+
+    .quiz-option.is-selected {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 700;
+    }
+
+    .quiz-option.is-correct {
+      background: var(--positive);
+      color: var(--on-positive);
+      font-weight: 700;
+    }
+
+    .quiz-option.is-wrong {
+      background: var(--error);
+      color: var(--on-error);
+      font-weight: 700;
+    }
+
+    .quiz-letter {
+      font-family: var(--font-label);
+      font-weight: 700;
+      padding: 2px 8px;
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      flex-shrink: 0;
+    }
+
+    .quiz-feedback {
+      padding: var(--space-md);
+      border: var(--ink-border);
+      border-radius: var(--rounded);
+      font-size: 0.95rem;
+    }
+
+    .quiz-feedback.is-correct {
+      background: var(--positive-bg);
+    }
+
+    .quiz-feedback.is-wrong {
+      background: var(--error-bg);
+    }
+
+    .footer-source {
+      padding-top: var(--space-lg);
+      border-top: var(--ink-border);
+      font-size: 0.9rem;
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+      }
+      aside.toc-aside {
+        display: none;
+      }
+      .mobile-jump-nav {
+        display: flex;
+      }
+      .scratch-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+        padding: var(--space-sm);
+      }
+      aside {
+        display: none;
+      }
+      body {
+        padding: var(--space-sm);
+      }
+      .hero-header, .topic-card, .lab-panel, .quiz-card, .flashcard-box {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+    <aside class="toc-aside" aria-label="Навігація по підручнику">
+      <p class="toc-title">Зміст путівника</p>
+      <ul class="toc-list">
+        <li><a class="toc-link" href="#sec-1"><span class="toc-num">01</span> Створюємо презентацію</a></li>
+        <li><a class="toc-link" href="#sec-2"><span class="toc-num">02</span> Інформаційні системи</a></li>
+        <li><a class="toc-link" href="#sec-3"><span class="toc-num">03</span> Спілкування онлайн</a></li>
+        <li><a class="toc-link" href="#sec-4"><span class="toc-num">04</span> Ігрові проєкти в Scratch</a></li>
+        <li><a class="toc-link" href="#sec-5"><span class="toc-num">05</span> Інформаційна мозаїка</a></li>
+        <li><a class="toc-link" href="#sec-flashcards"><span class="toc-num">ФК</span> Флеш-картки термінів</a></li>
+        <li><a class="toc-link" href="#sec-quiz"><span class="toc-num">ТС</span> Підсумковий тест</a></li>
+      </ul>
+      <div class="toc-progress-box">
+        <span class="kpi-label">Прогрес вивчення тем</span>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-fill" id="aside-progress-fill"></div>
+        </div>
+        <span class="kpi-label" id="aside-progress-text">0 із 15 модулів</span>
+      </div>
+    </aside>
+
+    <main class="main-flow">
+      <header class="hero-header">
+        <div class="stamp-row">
+          <span class="stamp">Інформатика · 6 клас</span>
+          <span class="stamp stamp--yellow">5 розділів · 28 тем у 15 модулях</span>
+        </div>
+        <h1 class="misregister hero-title">Інтерактивний путівник: цифрові підлітки</h1>
+        <p class="hero-lede">
+          Структурований конспект усього курсу інформатики для 6 класу: від дизайну презентацій, хмарних технологій та інтернету речей до програмування ігор у Scratch, кодування даних і підготовки до контрольної роботи.
+        </p>
+      </header>
+
+      <nav class="mobile-jump-nav" aria-label="Швидкий перехід до розділів">
+        <a href="#sec-1">01 Презентації</a>
+        <a href="#sec-2">02 ІС та хмара</a>
+        <a href="#sec-3">03 Мережа та етикет</a>
+        <a href="#sec-4">04 Scratch</a>
+        <a href="#sec-5">05 Інфомозаїка</a>
+        <a href="#sec-flashcards">Флеш-картки</a>
+        <a href="#sec-quiz">Тест</a>
+      </nav>
+
+      <section class="kpi-grid" aria-label="Зведення прогресу">
+        <div class="ink-block kpi-tile">
+          <span class="kpi-label">Модулі курсу</span>
+          <span class="kpi-value" id="kpi-topics">0 / 15</span>
+          <span class="kpi-note">позначено опрацьованими</span>
+        </div>
+        <div class="ink-block ink-block--alt kpi-tile">
+          <span class="kpi-label">Ключові терміни</span>
+          <span class="kpi-value" id="kpi-cards">0 / 25</span>
+          <span class="kpi-note">засвоєно на флеш-картках</span>
+        </div>
+        <div class="ink-block kpi-tile">
+          <span class="kpi-label">Самоперевірка</span>
+          <span class="kpi-value" id="kpi-quiz">—</span>
+          <span class="kpi-note" id="kpi-quiz-note">15 контрольних запитань</span>
+        </div>
+        <div class="ink-block ink-block--alt kpi-tile">
+          <span class="kpi-label">Практичні лабораторії</span>
+          <span class="kpi-value">5</span>
+          <span class="kpi-note">інтерактивних тренажерів</span>
+        </div>
+      </section>
+
+      <!-- ==================== РОЗДІЛ 1 ==================== -->
+      <section class="chapter-section" id="sec-1">
+        <div class="chapter-header">
+          <span class="stamp">Розділ 1 · стор. 6–33</span>
+          <h2 class="misregister chapter-heading">Створюємо презентацію</h2>
+          <p class="chapter-intro">
+            Презентація поєднує усну доповідь із текстом, графікою, аудіо, відео та діаграмами. Головна мета слайдів — підсилити вашу розповідь, а не замінити її суцільним текстом.
+          </p>
+        </div>
+
+        <div class="topic-list">
+          <!-- Тема 1.1 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Тема 1 · Основи та макети</span>
+                <h3 class="topic-title">Цікава презентація, робота зі слайдами, текстом та зображеннями</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r1t1" onclick="toggleTopic('r1t1')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Комп'ютерна презентація</strong> — представлення публіці ідеї, проєкту чи продукту за допомогою технічних засобів (Microsoft PowerPoint, Keynote, LibreOffice Impress, Google Презентації). Кожна «сторінка» називається <strong>слайдом</strong>.</p>
+                <p>Робота починається з <span class="highlight-flood">титульного слайда</span> (назва презентації, відомості про авторів, за потреби логотип). Для наступних слайдів діє золоте правило: <strong>«одна думка — один слайд»</strong>.</p>
+                <ul>
+                  <li><strong>Структура тексту:</strong> заголовок містить головну думку, підзаголовок — уточнення, основний текст — короткі тези без перевантаження.</li>
+                  <li><strong>Шрифти й кольори:</strong> використовуйте до 5 кольорів і не більше 3 шрифтів без засічок (Montserrat, Tenor Sans, Open Sans, Geometria).</li>
+                  <li><strong>Зображення з інтернету:</strong> обирайте опцію <em>Тільки Creative Commons</em> — ліцензія дозволяє вільне використання з обов'язковим зазначенням автора.</li>
+                  <li><strong>Масштабування без спотворень:</strong> тягніть виключно за <em>кутові маркери</em> (бічні спотворюють пропорції). Утримання клавіші <code>Ctrl</code> фіксує центр об'єкта.</li>
+                </ul>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Правило Гая Кавасакі 10 / 20 / 30</span>
+                  <p>Ефективна презентація містить не більше <strong>10 слайдів</strong>, триває до <strong>20 хвилин</strong> і не використовує шрифту, дрібнішого за <strong>30 пт</strong>.</p>
+                </div>
+                <div class="callout-box" style="margin-top: var(--space-md);">
+                  <span class="callout-label">Колонтитули, теми та показ слайдів</span>
+                  <p>Через <em>Вставлення → Колонтитули</em> додають дату, автора й нумерацію (можна приховати на титульному слайді). Через <em>Конструктор</em> обирають тему — набір кольорів і шрифтів. Режими подання: <em>Звичайний</em>, <em>Сортувальник слайдів</em> (зручно змінювати порядок ескізів) та <em>Показ слайдів</em> (запуск — <code>F5</code>, вихід — <code>Esc</code>).</p>
+                </div>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до теми 1</summary>
+              <div class="practice-body">
+                <p>Створіть презентацію з 4–5 слайдів про визначне місце України або улюблену домашню тварину: оформіть титульний слайд, вставте зображення за ліцензією Creative Commons, змініть його розмір за кутовий маркер, застосуйте стиль зображення та додайте нижній колонтитул з вашим ім'ям (приховавши його на першому слайді).</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Тема 1.2 & 1.3 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 2–3 · Динаміка і мультимедіа</span>
+                <h3 class="topic-title">Переходи, анімація, звук, відео та хронометраж</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r1t2" onclick="toggleTopic('r1t2')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Переходи</strong> — ефекти руху при зміні одного слайда на інший (три групи: <em>мимовільні</em>, <em>вражаючі</em>, <em>динамічний вміст</em>). Для автоматичного показу знімають прапорець <em>Клацання кнопки миші</em> та встановлюють інтервал <em>Після</em>.</p>
+                <p><strong>Анімація</strong> — відеоефект для окремого об'єкта на слайді (тексту чи зображення). Чотири типи анімацій:</p>
+                <ul>
+                  <li><strong>Вхід</strong> — спосіб появи об'єкта на слайді;</li>
+                  <li><strong>Виокремлення</strong> — акцентування уваги на об'єкті, що вже є на слайді;</li>
+                  <li><strong>Вихід</strong> — спосіб зникнення об'єкта;</li>
+                  <li><strong>Шляхи переміщення</strong> — рух об'єкта за заданою траєкторією.</li>
+                </ul>
+                <p>Для інтерактивності використовують <strong>Тригер</strong> — запуск анімації після клацання на конкретний об'єкт. Порядок ефектів змінюють кнопками <em>Раніше / Пізніше</em>.</p>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Аудіо, відео та хронометраж</span>
+                  <p>Через <em>Вставлення → Мультимедіа</em> додають аудіо (з ПК або власний дикторський запис) і відео. Щоб утримати увагу аудиторії, використовуйте короткі відео тривалістю <strong>30–60 секунд</strong>. Вкладка <em>Аудіоформат</em> дає змогу обрізати звук, налаштувати <em>Наростання / Затухання</em> та замінити піктограму на тематичну картинку.</p>
+                  <p><strong>Хронометраж:</strong> якщо задати <em>Тривалість = 2,00 с</em> і <em>Затримка = 3,00 с</em>, анімація розпочнеться через 3 секунди після появи слайда і триватиме 2 секунди.</p>
+                </div>
+                <p style="margin-top: var(--space-sm); font-size: 0.92rem; color: var(--on-surface-variant);">
+                  <strong>Історична довідка:</strong> перші спеціальні проєктори для слайдів — кодоскопи — з'явилися у 1927 році.
+                </p>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до тем 2–3</summary>
+              <div class="practice-body">
+                <p>Налаштуйте на другому слайді плавну появу заголовка (Тривалість 1,00 с, Затримка 0,50 с), а потім появу фотографії в тому ж напрямку. Додайте короткий музичний фрагмент із наростанням гучності на 1 секунду.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Тема 1.4 & 1.5 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 4–5 · Візуалізація та виступ</span>
+                <h3 class="topic-title">SmartArt, діаграми та поради для ідеального виступу</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r1t3" onclick="toggleTopic('r1t3')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>SmartArt</strong> перетворює списки й процеси на наочні схеми: для ієрархії школи підійде макет <em>Ієрархія</em>, для кругообігу води — <em>Цикл</em>, для переліків — <em>Список</em>.</p>
+                <p><strong>Діаграма</strong> — графічне представлення числових даних (редагується через таблицю Microsoft Excel командою <em>Редагувати дані</em>):</p>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Вид діаграми</th>
+                        <th>Коли застосовувати</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Стовпчаста</strong></td>
+                        <td>Порівняння даних, демонстрація відмінностей чи змін.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Секторна</strong></td>
+                        <td>Відображення частин одного цілого та їх співвідношення.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Лінійчата</strong></td>
+                        <td>Велика кількість даних або динаміка змін у часі.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Гістограма</strong></td>
+                        <td>Наочне горизонтальне розташування числових рядів.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Правило макета 2 / 4 / 8 та психологія уваги</span>
+                  <p>Люди читають слайди «по діагоналі». Оптимально: <span class="highlight-flood">2 хвилини</span> на слайд, до <span class="highlight-flood">4 речень</span> і до <span class="highlight-flood">8 слів</span> у рядку.</p>
+                  <p>За даними біолога Джона Медини, увага аудиторії падає через <strong>9 хв 59 с</strong>, тому великі доповіді (до 40–45 хв за Карміне Галло) розбивають на блоки по 10 хвилин. Пам'ятайте: <strong>69% слухачів</strong> не терплять, коли спікер просто зачитує текст зі слайдів.</p>
+                </div>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до тем 4–5</summary>
+              <div class="practice-body">
+                <p>Складіть розповідь про принципи здорового харчування або зашифруйте своє ім'я за допомогою орнаменту вишивки, використавши SmartArt «Список» та стовпчасту діаграму з налаштованою шкалою осі значень. Проведіть репетицію виступу, дотримуючись правила 2/4/8.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Інтерактивна лабораторія 1 -->
+          <div class="lab-panel" aria-label="Інтерактивний інспектор презентації">
+            <div class="stamp-row">
+              <span class="stamp">Інтерактивна лабораторія 1</span>
+              <span class="kpi-label">Перевірка слайдів за правилами 10/20/30 і 2/4/8</span>
+            </div>
+            <p style="margin:0;">Змініть параметри вашої майбутньої презентації та перевірте, чи відповідає вона стандартам підручника:</p>
+            <div class="lab-controls-grid">
+              <div class="field-group">
+                <label class="field-label" for="pres-slides">Кількість слайдів</label>
+                <input class="riso-input" type="number" id="pres-slides" min="1" max="40" value="8" oninput="evaluatePresentation()">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="pres-font">Розмір шрифту (пт)</label>
+                <input class="riso-input" type="number" id="pres-font" min="10" max="72" value="32" oninput="evaluatePresentation()">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="pres-words">Слів у рядку слайда</label>
+                <input class="riso-input" type="number" id="pres-words" min="1" max="30" value="7" oninput="evaluatePresentation()">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="pres-video">Відеокліп (сек)</label>
+                <input class="riso-input" type="number" id="pres-video" min="0" max="300" value="45" oninput="evaluatePresentation()">
+              </div>
+            </div>
+            <div class="audit-result is-good" id="pres-audit-box" aria-live="polite">
+              <strong>Вердикт: збалансована презентація.</strong>
+              <span>Усі параметри вкладаються у рекомендації підручника: слайди легко читаються, темп оптимальний.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== РОЗДІЛ 2 ==================== -->
+      <section class="chapter-section" id="sec-2">
+        <div class="chapter-header">
+          <span class="stamp">Розділ 2 · стор. 34–81</span>
+          <h2 class="misregister chapter-heading">Інформаційні системи</h2>
+          <p class="chapter-intro">
+            Інформаційні системи оточують нас повсюди — від шкільної бібліотеки до смартфонів, хмарних сховищ і датчиків «розумного будинку».
+          </p>
+        </div>
+
+        <div class="topic-list">
+          <!-- Тема 2.1 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Тема 1 · Архітектура ІС</span>
+                <h3 class="topic-title">Апаратна та програмна складові інформаційної системи</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r2t1" onclick="toggleTopic('r2t1')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Інформаційна система (ІС)</strong> — це об'єкти, які пов'язані між собою та можуть збирати, передавати, опрацьовувати й зберігати дані. Комп'ютерна техніка для цього не обов'язкова: найдавнішими ІС є бібліотеки (в Україні найдавніша — бібліотека Львівського національного університету імені Івана Франка, 1608 р.).</p>
+                <p>Головні характеристики ІС: <em>призначення</em>, <em>користувачі</em>, <em>складові</em>, <em>технологія</em>.</p>
+                <ul>
+                  <li><strong>За природою:</strong> <em>біологічні</em> (клітини, організми), <em>технічні</em> (датчики, пристрої, програми), <em>соціальні</em> (люди та оточення).</li>
+                  <li><strong>За участю людини:</strong> <em>ручні</em> (працює лише людина), <em>автоматизовані</em> (частину дій робить техніка, частину — людина), <em>автоматичні</em> (без участі людини).</li>
+                </ul>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">«Залізо» та «Софт» у дії: оплата карткою</span>
+                  <p><strong>Апаратне забезпечення</strong> — технічні пристрої («залізо»). <strong>Програмне забезпечення</strong> — інструкції та програми («софт»), що «вдихають життя» у пристрій.</p>
+                  <p>При оплаті на терміналі: 1) картка подає сигнал → 2) програма термінала перетворює сигнал на команди → 3) вбудований процесор виконує їх → 4) на екрані з'являються підказки → 5) проходить оплата і друкується чек.</p>
+                </div>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до теми 1</summary>
+              <div class="practice-body">
+                <p>Проаналізуйте знайому вам інформаційну систему (наприклад, електронний щоденник або касу самообслуговування): випишіть її призначення, користувачів, апаратну й програмну складові та визначте, чи є вона автоматизованою, ручною чи автоматичною.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Тема 2.2 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Тема 2 · Класифікація ПЗ і драйвери</span>
+                <h3 class="topic-title">Операційні системи, драйвери та види програмного забезпечення</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r2t2" onclick="toggleTopic('r2t2')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p>Різні пристрої мають власні <strong>операційні системи</strong>: ПК — <em>Windows 11, macOS, Linux, Ubuntu, ChromeOS, UNIX</em>; смартфони/планшети — <em>Android, iOS, Ubuntu Touch</em>; смартгодинники — <em>watchOS, Tizen</em>; SmartTV — <em>Android TV, tvOS, webOS, Tizen</em>.</p>
+                <p>Щоб «подружити» нове обладнання з ОС, потрібні <strong>драйвери</strong> (від англ. <em>driver</em> — керівник). Перевірити їхній стан можна у <strong>Диспетчері пристроїв</strong> (<code>Win + X</code>): знак оклику біля пристрою означає, що драйвер не встановлено.</p>
+                <p>Встановлення програми на пристрій називається <strong>інсталяцією</strong>. Для ПК вживають слово <em>програма</em>, для смартфонів і SmartTV — <em>застосунок</em>. Приклад українського успіху — компанія <em>Universe</em> (Scan Guru).</p>
+              </div>
+              <div class="prose-col">
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Категорія ПЗ</th>
+                        <th>Призначення та приклади</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Системне</strong></td>
+                        <td>Керування роботою ПК: ОС, драйвери, утиліти оптимізації дисків, архіватори, антивіруси (<em>Windows Defender</em>, український <em>Zillya!</em>).</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Прикладне</strong></td>
+                        <td>Особисті задачі користувача: текстові/графічні/табличні/відеоредактори, месенджери, ігри, симулятори.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Інструментальне</strong></td>
+                        <td>Середовища для створення інших програм (наприклад, <em>Scratch</em>).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Тема 2.3 & 2.4 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 3–4 · Хмара та онлайн-освіта</span>
+                <h3 class="topic-title">Хмарні технології, вебсервіси, OneDrive та дистанційне навчання</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r2t3" onclick="toggleTopic('r2t3')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Хмарні технології (Cloud Computing)</strong> дозволяють зберігати й обробляти дані у віддаленому середовищі за наявності інтернету. Фізично ці дані лежать у величезних <strong>Data-центрах</strong> — будівлях із серверами та накопичувачами.</p>
+                <p><strong>Вебсервіси</strong> — програми, які відкриваються у браузері без встановлення на ПК. На прикладі сховища <strong>OneDrive</strong> (<code>onedrive.live.com</code>) можна створювати папки й документи, переглядати <em>Журнал версій</em>, завантажувати файли перетягуванням (Drag &amp; Drop) та надавати спільний доступ («розшарити» — від англ. <em>share</em>) з трьома рівнями прав:</p>
+                <ul>
+                  <li><strong>Редагування</strong> — користувач може змінювати зміст і форматування;</li>
+                  <li><strong>Рецензування</strong> — дозволено лише додавати коментарі та пропозиції;</li>
+                  <li><strong>Перегляд</strong> — читання без можливості редагувати.</li>
+                </ul>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Гігієна хмарного акаунта</span>
+                  <p>Використовуйте складний пароль, пам'ятайте його, нікому не передавайте й змінюйте <strong>раз на 3 місяці</strong>.</p>
+                </div>
+                <div class="callout-box" style="margin-top: var(--space-md);">
+                  <span class="callout-label">Платформи для онлайн-навчання</span>
+                  <p><strong>Дія. Цифрова освіта</strong> (<code>osvita.diia.gov.ua</code> — освітні серіали та тестування <em>Цифрограм</em> із сертифікатом), <strong>Google Клас</strong>, <strong>Microsoft Teams</strong>, <strong>Moodle</strong>, безпечний <strong>YouTube Kids</strong>, онлайн-дошки (Miro) та віртуальні симулятори.</p>
+                </div>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до тем 3–4</summary>
+              <div class="practice-body">
+                <p>Створіть у хмарному сховищі OneDrive або Google Диску папку «Проєкт 6 клас», завантажте туди текстовий документ, відкрийте спільний доступ однокласнику в режимі <em>Рецензування</em> та перевірте запис у <em>Журналі версій</em>.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Тема 2.5 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Тема 5 · Розумні речі</span>
+                <h3 class="topic-title">Інтернет речей (IoT), мікроконтролери та датчики</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r2t4" onclick="toggleTopic('r2t4')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Інтернет речей (IoT)</strong> об'єднує «розумні» пристрої, здатні збирати дані про середовище та діяти автономно: фітнес-браслети, розумні кавоварки, клімат-контроль, медичні сенсори, а також український винахід <strong>Petcube</strong> (розумна камера-іграшка для домашніх улюбленців).</p>
+                <p><strong>5 елементів IoT:</strong> 1) мікроконтролери й датчики (температури, тиску, вологості, руху, освітлення, ваги, відстані); 2) засоби зв'язку (<code>Wi-Fi</code>, <code>4G</code>, <code>Bluetooth</code>, <code>NFC</code>); 3) платформи конструювання (<code>Arduino</code>, <code>Micro:bit</code>, <code>Tinkercad</code>); 4) хмарні центри обробки; 5) програми для користувача.</p>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Що таке мікроконтролер</span>
+                  <p><strong>Мікроконтролер</strong> — мікросхема (мінікомп'ютер із процесором, оперативною пам'яттю та портами вводу/виводу), змонтована на друкованій платі для керування електронікою.</p>
+                  <p>Прості обчислення (як-от кондиціонер) пристрій робить локально, а великі потоки даних (система безпеки з камерами) відправляються для аналізу у хмарні Data-центри.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Інтерактивна лабораторія 2 -->
+          <div class="lab-panel" aria-label="Тренажер класифікації ПЗ та хмарного доступу">
+            <div class="stamp-row">
+              <span class="stamp">Інтерактивна лабораторія 2</span>
+              <span class="kpi-label">Класифікація програм та підбір прав доступу в OneDrive</span>
+            </div>
+            <div class="lab-controls-grid">
+              <div class="field-group">
+                <label class="field-label" for="sw-select">Оберіть програмний об'єкт</label>
+                <select class="riso-select" id="sw-select">
+                  <option value="sys">Антивірус Zillya! / Драйвер принтера</option>
+                  <option value="app">Редактор презентацій / Месенджер</option>
+                  <option value="inst">Середовище програмування Scratch</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="sw-guess">До якої групи належить?</label>
+                <select class="riso-select" id="sw-guess">
+                  <option value="sys">Системне ПЗ</option>
+                  <option value="app">Прикладне ПЗ</option>
+                  <option value="inst">Інструментальне ПЗ</option>
+                </select>
+              </div>
+              <button type="button" class="btn btn--primary" onclick="checkSoftwareMatch()">Перевірити групу</button>
+            </div>
+            <div class="audit-result" id="sw-feedback" aria-live="polite">
+              <strong>Оберіть пару та натисніть «Перевірити групу»</strong>
+              <span>Зверніть увагу: середовища програмування (Scratch) не входять до прикладного ПЗ — це інструментальне ПЗ.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== РОЗДІЛ 3 ==================== -->
+      <section class="chapter-section" id="sec-3">
+        <div class="chapter-header">
+          <span class="stamp">Розділ 3 · стор. 82–112</span>
+          <h2 class="misregister chapter-heading">Спілкування онлайн</h2>
+          <p class="chapter-intro">
+            Як комп'ютери обмінюються пакетами даних через інтернет і як людям спілкуватися в блогах, чатах, соцмережах та іграх безпечно, ввічливо й відповідально.
+          </p>
+        </div>
+
+        <div class="topic-list">
+          <!-- Тема 3.1 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 1–4 · Мережі та інструменти комунікації</span>
+                <h3 class="topic-title">Комп'ютерні мережі, модель клієнт–сервер та обмін пакетами</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r3t1" onclick="toggleTopic('r3t1')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Комп'ютерна мережа</strong> — група з двох або більше пристроїв (<strong>вузлів</strong>), з'єднаних кабелями, оптоволокном або бездротово (<code>Wi-Fi</code>, <code>Bluetooth</code>, <code>NFC</code>, мобільний/супутниковий інтернет) для обміну даними.</p>
+                <p>Робота інтернету побудована за моделлю <strong>клієнт–сервер</strong>: ваш браузер (клієнт) надсилає <em>запит</em> на сервер провайдера, який зв'язується з вебсервером і повертає <em>відповідь</em>. Комп'ютери спілкуються за допомогою правил — <strong>протоколів зв'язку</strong>.</p>
+                <p>Блоги (Blogger) використовують для публікації статей і коментарів, а месенджери (Viber, WhatsApp, Apple FaceTime) — для швидких повідомлень, аудіо- та відеодзвінків.</p>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Структура інформаційного пакета</span>
+                  <p>Інформація розбивається на невеликі шматки — пакети (як поштові листівки):</p>
+                  <p>1. <strong>Заголовок:</strong> адреса відправника, адреса одержувача, протокол, номер пакета.</p>
+                  <p>2. <strong>Корисні дані:</strong> власне фрагмент інформації.</p>
+                  <p>3. <strong>Трейлер:</strong> дані про кінець пакета (якщо пакет загубився, система надсилає його повторно).</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Тема 3.5 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Тема 5 · Цифрове громадянство</span>
+                <h3 class="topic-title">Персональні дані, нетикет, кібербулінг та цифровий слід</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r3t2" onclick="toggleTopic('r3t2')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Персональні дані</strong> — будь-які відомості, що ідентифікують особу (ім'я, номер телефону, адреса, школа, фінансові статки). В Україні їх захищають закони «Про інформацію» та «Про захист персональних даних». У соцмережах встановлюйте <strong>приватний профіль</strong> і створюйте акаунт з дозволу батьків.</p>
+                <p><strong>Нетикет (мережевий етикет)</strong> — правила ввічливості в мережі. <em>Золоте правило нетикету:</em> <span class="highlight-flood">поводьтеся з іншими в інтернеті так, як хотіли б, щоб поводилися з вами</span>.</p>
+                <ul>
+                  <li>Не пишіть ВЕЛИКИМИ ЛІТЕРАМИ (у мережі це сприймається як крик).</li>
+                  <li>Не розсилайте спам і не беріть участі у флеймах (суперечках із образами).</li>
+                  <li>Для масових листів ховайте чужі адреси у <em>Приховану копію</em>.</li>
+                  <li>Поважайте інтелектуальну власність: вказуйте автора та не завантажуйте піратський контент.</li>
+                </ul>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Кібербулінг, цифровий слід та ігри</span>
+                  <p><strong>Кібербулінг</strong> — повторюване цькування через цифрові пристрої. Якщо стали свідком чи жертвою: заблокуйте агресора, надішліть скаргу (звіт) платформі, повідомте батьків або вчителів і підтримайте потерпілого.</p>
+                  <p><strong>Цифровий слід:</strong> <em>пасивний</em> (збирається автоматично без вашого відома) та <em>активний</em> (публікації, які ви робите свідомо).</p>
+                  <p><strong>Онлайн-ігри:</strong> ставте малюнок замість фото на аватар, не приймайте файли від незнайомців, не зустрічайтеся наживо з онлайн-гравцями та пам'ятайте: служба підтримки <em>ніколи</em> не питає ваш пароль!</p>
+                </div>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до розділу 3</summary>
+              <div class="practice-body">
+                <p>Підрахуйте, скільки годин на тиждень ви проводите в соцмережах та онлайн-іграх, складіть план цифрового балансу та перевірте налаштування приватності свого профілю (обмежте видимість номера телефону, школи й фотографій для незнайомців).</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Інтерактивна лабораторія 3 -->
+          <div class="lab-panel" aria-label="Симулятор мережевого пакета">
+            <div class="stamp-row">
+              <span class="stamp">Інтерактивна лабораторія 3</span>
+              <span class="kpi-label">Моделювання передачі інформаційного пакета</span>
+            </div>
+            <div class="lab-controls-grid">
+              <div class="field-group">
+                <label class="field-label" for="pkt-msg">Текст повідомлення для відправки</label>
+                <input class="riso-input" type="text" id="pkt-msg" value="Привіт, 6 клас!" maxlength="40" oninput="updatePacketPreview()">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="pkt-proto">Протокол передачі</label>
+                <select class="riso-select" id="pkt-proto" onchange="updatePacketPreview()">
+                  <option value="HTTPS">HTTPS (вебсторінка)</option>
+                  <option value="SMTP">SMTP (електронний лист)</option>
+                </select>
+              </div>
+              <div class="btn-row">
+                <button type="button" class="btn btn--primary" onclick="simulatePacketSend(false)">Надіслати пакет</button>
+                <button type="button" class="btn btn--outline" onclick="simulatePacketSend(true)">Імітувати втрату</button>
+              </div>
+            </div>
+            <div class="packet-viz" id="packet-viz-parts">
+              <div class="packet-part packet-part--head">
+                <span class="kpi-label">1. Заголовок</span>
+                <div id="pkt-head-text">Від: 192.168.1.10 → Кому: Вебсервер · HTTPS · №1</div>
+              </div>
+              <div class="packet-part">
+                <span class="kpi-label">2. Корисні дані</span>
+                <div id="pkt-data-text">«Привіт, 6 клас!»</div>
+              </div>
+              <div class="packet-part packet-part--trail">
+                <span class="kpi-label">3. Трейлер</span>
+                <div id="pkt-trail-text">Маркер кінця пакета · Контрольна сума OK</div>
+              </div>
+            </div>
+            <div class="audit-result is-good" id="pkt-status" aria-live="polite">
+              <strong>Готовий до передачі.</strong>
+              <span>Натисніть «Надіслати пакет» або змоделюйте його втрату в каналі зв'язку.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== РОЗДІЛ 4 ==================== -->
+      <section class="chapter-section" id="sec-4">
+        <div class="chapter-header">
+          <span class="stamp">Розділ 4 · стор. 113–150</span>
+          <h2 class="misregister chapter-heading">Алгоритми та програми. Ігрові проєкти в Scratch</h2>
+          <p class="chapter-intro">
+            Програмування повноцінних ігор («Лабіринт», «Ракета») із датчиками дотику, циклами, змінними, координатами сцени та складними логічними умовами.
+          </p>
+        </div>
+
+        <div class="topic-list">
+          <!-- Тема 4.1 & 4.2 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 1–2 · Сенсори та повторення</span>
+                <h3 class="topic-title">Блоки датчиків дотику та три види циклів у Scratch</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r4t1" onclick="toggleTopic('r4t1')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Блоки Дотику</strong> (категорія <em>Датчики</em>) мають шестикутну форму та повертають значення <strong>Істинно (True)</strong> або <strong>Хибно (False)</strong>:</p>
+                <ul>
+                  <li><code>торкається (спрайт / межа / вказівник)?</code> — перевіряє зіткнення;</li>
+                  <li><code>торкається кольору ()?</code> — перевіряє дотик до конкретного кольору (використовується у грі «Лабіринт» для стін або фінішного пончика).</li>
+                </ul>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Три цикли з категорії Керування</span>
+                  <p>1. <code>повторити (10)</code> — коли точно відома кількість повторень.</p>
+                  <p>2. <code>завжди</code> — нескінченний цикл, зупиняється кнопкою «Стоп».</p>
+                  <p>3. <code>повторити до &lt;умова&gt;</code> — виконується доти, поки умова <em>хибна</em>, і завершується, коли умова стає <em>істинною</em> (наприклад, рухатися до межі сцени).</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Тема 4.3 & 4.4 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 3–5 · Дані та простір сцени</span>
+                <h3 class="topic-title">Змінні, обчислення, розгалуження та координати сцени</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r4t2" onclick="toggleTopic('r4t2')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Змінна</strong> — контейнер з унікальним іменем для збереження <strong>чисел</strong> або <strong>тексту (рядків)</strong>. Блоки: <code>надати () значення ()</code> та <code>змінити () на ()</code> (наприклад, лічильник зібраних яблук у грі).</p>
+                <p><strong>Математичні оператори:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> та <code>випадкове від 1 до 10</code>. Для прийняття рішень застосовують блоки <code>якщо ... то</code> та <code>якщо ... то ... інакше</code>.</p>
+                <p><strong>Координати (x, y):</strong> сцена має центр у точці <code>(0, 0)</code>. Вісь <code>x</code> змінюється від <strong>−240 (ліворуч) до +240 (праворуч)</strong>, вісь <code>y</code> — від <strong>−180 (знизу) до +180 (згори)</strong>.</p>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Блоки координат та плавне керування</span>
+                  <p><code>перемістити в x: () y: ()</code> — миттєвий стрибок; <code>ковзати () сек до x: () y: ()</code> — плавний переліт; <code>змінити x на (+10/-10)</code> — крок вправо/вліво; <code>змінити y на (+10/-10)</code> — крок вгору/вниз.</p>
+                  <p>Для плавного руху в іграх («Ракета») замість події <em>коли клавішу натиснуто</em> використовують цикл <code>завжди</code> з перевіркою <code>якщо &lt;клавішу стрілка натиснуто?&gt;</code>.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Тема 4.6 – 4.8 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 6–8 · Логіка та ігровий цикл</span>
+                <h3 class="topic-title">Логічні оператори (І, АБО, НЕ), очікування та вдосконалення гри</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r4t3" onclick="toggleTopic('r4t3')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p>Складні умови будуються трьома <strong>логічними операторами</strong>:</p>
+                <ul>
+                  <li><strong><code>&lt;А&gt; і &lt;Б&gt;</code></strong> — істинно лише тоді, коли виконуються <strong>обидві</strong> умови одночасно;</li>
+                  <li><strong><code>&lt;А&gt; або &lt;Б&gt;</code></strong> — істинно, якщо виконується <strong>хоча б одна</strong> умова;</li>
+                  <li><strong><code>не &lt;А&gt;</code></strong> — істинно, коли умова <strong>не виконується</strong> (перетворює Істину на Хибність і навпаки).</li>
+                </ul>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Чекати поки та гра «Ракета»</span>
+                  <p>На відміну від <code>чекати () секунд</code>, блок <code>чекати поки &lt;умова&gt;</code> призупиняє сценарій до моменту, поки не відбудеться певна подія (напр., торкання вказівника миші).</p>
+                  <p>У грі <strong>«Ракета»</strong> космічний корабель літає по координаті <code>y</code>, уникаючи хмар та будівель, а при зіткненні (блок дотику) змінна <code>Життя</code> зменшується на <code>-1</code>.</p>
+                </div>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до ігрових проєктів у Scratch</summary>
+              <div class="practice-body">
+                <p>Реалізуйте у Scratch мінігру «Лабіринт» або «Ракета»: додайте спрайти (Миша1, 5 продубльованих Яблук, Пончик), створіть змінну <code>Лічильник</code> і перевірку <code>якщо Лічильник = 5</code> з вітальним повідомленням. Перевірте керування за координатами через цикл <code>завжди</code> у симуляторі нижче.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Інтерактивна лабораторія 4: Scratch Stage + Logic -->
+          <div class="lab-panel" aria-label="Інтерактивний симулятор координат Scratch">
+            <div class="stamp-row">
+              <span class="stamp">Інтерактивна лабораторія 4</span>
+              <span class="kpi-label">Симулятор сцени Scratch (X: −240..240, Y: −180..180) та логіки</span>
+            </div>
+            <div class="scratch-layout">
+              <div class="scratch-stage-wrap">
+                <svg class="scratch-svg" viewBox="-260 -200 520 400" role="img" aria-label="Координатна сітка сцени Scratch">
+                  <!-- Сітка -->
+                  <rect x="-240" y="-180" width="480" height="360" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="2"/>
+                  <line x1="-240" y1="0" x2="240" y2="0" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6 4"/>
+                  <line x1="0" y1="-180" x2="0" y2="180" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6 4"/>
+                  <!-- Підписи осей -->
+                  <text x="190" y="-8" fill="var(--on-surface)" font-family="var(--font-label)" font-size="13" font-weight="700">X: +240</text>
+                  <text x="-234" y="-8" fill="var(--on-surface)" font-family="var(--font-label)" font-size="13" font-weight="700">X: -240</text>
+                  <text x="8" y="-160" fill="var(--on-surface)" font-family="var(--font-label)" font-size="13" font-weight="700">Y: +180</text>
+                  <text x="8" y="172" fill="var(--on-surface)" font-family="var(--font-label)" font-size="13" font-weight="700">Y: -180</text>
+                  <!-- Ціль: Пончик у (140, -80) -> SVG y = +80 -->
+                  <circle cx="140" cy="80" r="24" fill="var(--primary-container)" stroke="var(--outline)" stroke-width="2.5"/>
+                  <circle cx="140" cy="80" r="7" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="2"/>
+                  <text x="140" y="122" text-anchor="middle" fill="var(--on-surface)" font-family="var(--font-label)" font-size="12" font-weight="700">Ціль (140, -80)</text>
+                  <!-- Спрайт Кіт/Ракета -->
+                  <g id="scratch-sprite" transform="translate(0, 0)">
+                    <circle cx="0" cy="0" r="22" fill="var(--secondary)" stroke="var(--outline)" stroke-width="2.5"/>
+                    <polygon points="0,-12 11,8 -11,8" fill="var(--on-surface)"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="prose-col" style="display:flex; flex-direction:column; gap:var(--space-md);">
+                <div class="callout-box">
+                  <span class="callout-label">Поточні координати спрайта</span>
+                  <div style="font-family:var(--font-label); font-size:1.25rem; font-weight:700;" id="scratch-coords">X = 0, Y = 0</div>
+                  <div id="scratch-touch-status" style="font-weight:600; color:var(--on-surface-variant);">Датчик: торкається Цілі? — Хибно (False)</div>
+                </div>
+                <div class="btn-row">
+                  <button type="button" class="btn btn--outline" onclick="moveScratch(0, 40)">Y +40 (Вгору)</button>
+                  <button type="button" class="btn btn--outline" onclick="moveScratch(0, -40)">Y −40 (Вниз)</button>
+                  <button type="button" class="btn btn--outline" onclick="moveScratch(-40, 0)">X −40 (Ліворуч)</button>
+                  <button type="button" class="btn btn--outline" onclick="moveScratch(40, 0)">X +40 (Праворуч)</button>
+                </div>
+                <div class="btn-row">
+                  <button type="button" class="btn btn--secondary" onclick="setScratch(140, -80)">Ковзати до (140, -80)</button>
+                  <button type="button" class="btn btn--outline" onclick="setScratch(0, 0)">У центр (0, 0)</button>
+                </div>
+                <div class="callout-box">
+                  <span class="callout-label">Перевірка логічного оператора</span>
+                  <div class="btn-row">
+                    <label style="display:inline-flex; align-items:center; gap:var(--space-xs); min-height:44px; cursor:pointer;">
+                      <input type="checkbox" id="logic-a" checked onchange="evalScratchLogic()"> Умова А (Стрілка)
+                    </label>
+                    <label style="display:inline-flex; align-items:center; gap:var(--space-xs); min-height:44px; cursor:pointer;">
+                      <input type="checkbox" id="logic-b" onchange="evalScratchLogic()"> Умова Б (Пропуск)
+                    </label>
+                  </div>
+                  <div id="logic-output" style="font-family:var(--font-label); font-size:0.9rem;">
+                    А і Б = Хибно · А або Б = Істинно · не А = Хибно
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== РОЗДІЛ 5 ==================== -->
+      <section class="chapter-section" id="sec-5">
+        <div class="chapter-header">
+          <span class="stamp">Розділ 5 · стор. 151–176</span>
+          <h2 class="misregister chapter-heading">Інформаційна мозаїка</h2>
+          <p class="chapter-intro">
+            Як відомості перетворюються на мудрість, як розпізнати фейк, класифікувати об'єкти, побудувати 3D-модель та створити професійну інфографіку.
+          </p>
+        </div>
+
+        <div class="topic-list">
+          <!-- Тема 5.1 & 5.2 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 1–2 · Інформація та процеси</span>
+                <h3 class="topic-title">Дані, повідомлення, інформаційні процеси та виявлення фейків</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r5t1" onclick="toggleTopic('r5t1')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Повідомлення</strong> — відомості про навколишній світ, які ми отримуємо органами чуття (зір, слух, нюх, смак, дотик). <strong>Дані</strong> — відомості у вигляді, придатному для опрацювання.</p>
+                <p>Ієрархія пізнання: <strong>Дані</strong> → (опрацювання) → <strong>Інформація</strong> → (систематизація) → <strong>Знання</strong> → (застосування) → <strong>Мудрість</strong>. Всесвітній день інформації відзначають <strong>26 листопада</strong> з 1994 року.</p>
+                <p><strong>Види інформації:</strong> текстова, цифрова, графічна, звукова, комбінована. <strong>5 інформаційних процесів:</strong> <em>введення</em> (включає збирання), <em>опрацювання</em> (зокрема захист даних), <em>зберігання</em> (на носіях — папір, флешка, диск), <em>передавання</em> (джерело → канал зв'язку → приймач), <em>виведення</em>.</p>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Як зловити фейк</span>
+                  <p>Ознаки фейку (спотвореної чи неправдивої інформації): відсутні або анонімні джерела, неперевірені акаунти соцмереж, підозрілі посилання, надмірні емоції, видавання думки чи оцінки за доведений факт.</p>
+                  <p style="margin-top:var(--space-xs);"><strong>QR-код</strong> створила японська компанія <em>Denso Wave</em> для автоконцерну Toyota у 1994 році для швидкого кодування й декодування повідомлень.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Тема 5.3 & 5.4 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Теми 3–4 · Класифікація та моделі</span>
+                <h3 class="topic-title">Програмні об'єкти, класифікація та інформаційні моделі</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r5t2" onclick="toggleTopic('r5t2')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Класифікація</strong> — поділ об'єктів на групи за певними ознаками (наприклад, підручники бувають друковані й електронні). Кожен програмний об'єкт має <em>властивості</em> та <em>дії</em>:</p>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Об'єкт (Середовище)</th>
+                        <th>Властивості</th>
+                        <th>Дії</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Папка</strong> (Windows)</td>
+                        <td>Ім'я, розмір, дата, кількість файлів</td>
+                        <td>Створення, перейменування, копіювання, видалення</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Виконавець</strong> (Scratch)</td>
+                        <td>Ім'я, координати, напрямок, стиль обертання</td>
+                        <td>Дублювання, вилучення, зміна образу</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Лист</strong> (Gmail)</td>
+                        <td>Адреса відправника/отримувача, дата, тема</td>
+                        <td>Відповідь, пересилання, архівування, видалення</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Шаблон</strong> (Canva)</td>
+                        <td>Фон сторінки, анімація, тривалість показу</td>
+                        <td>Додати, дублювати, змінити колір, видалити</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">Форми моделей та 3D-друк</span>
+                  <p>Форми подання інформаційних моделей: <em>словесна</em>, <em>структурна</em> (схеми, таблиці, графіки), <em>графічна</em> (карти, креслення), <em>математична</em> (рівняння, формули), <em>спеціальна</em> (ноти, хімічні реакції).</p>
+                  <p>Об'ємні цифрові <strong>3D-моделі</strong> створюють, наприклад, у програмі <strong>Blender</strong> (<code>blender.org</code>) і роздруковують на 3D-принтері (технологія <em>стереолітографії</em>; назва 3D походить від компанії 3D Systems Corporation).</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Тема 5.5 -->
+          <article class="topic-card card-wrapper">
+            <div class="topic-top">
+              <div class="topic-title-wrap">
+                <span class="topic-kicker">Тема 5 · Візуалізація та компетентність</span>
+                <h3 class="topic-title">Інфографіка, нелінійне мультимедіа та сучасні ІТ</h3>
+              </div>
+              <button type="button" class="done-btn" data-topic-id="r5t3" onclick="toggleTopic('r5t3')">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                <span>Позначити вивченим</span>
+              </button>
+            </div>
+            <div class="topic-grid topic-grid--split">
+              <div class="prose-col">
+                <p><strong>Інформаційні технології (ІТ)</strong> — методи й засоби пошуку, збирання, обробки, зберігання та передачі інформації. Сучасні напрями: <em>Smart-технології</em>, <em>нанотехнології</em> (рівень атомів і молекул), <em>хмарні технології</em>, <em>штучний інтелект</em> (нейромережі на зразок ChatGPT, представленої 30 листопада 2022 р.).</p>
+                <p><strong>Інфографіка</strong> — візуальне подання інформації. Види: <em>інформаційна</em>, <em>хронологічна</em> (події в часі), <em>статистична</em> (діаграми), <em>географічна</em> (карти), <em>процесуальна</em> (етапи), <em>ієрархічна</em> (піраміда важливості), <em>зі списком</em>, <em>інфографічне резюме</em>.</p>
+                <p>Прикладом <strong>нелінійного мультимедіа</strong> є комп'ютерна гра, де кожна дія гравця змінює перебіг подій.</p>
+              </div>
+              <div class="prose-col">
+                <div class="callout-box">
+                  <span class="callout-label">5 кроків створення інфографіки</span>
+                  <ol style="margin:0; padding-left:var(--space-lg);">
+                    <li>Визначте ціль та аудиторію.</li>
+                    <li>Зберіть перевірені дані з надійних джерел.</li>
+                    <li>Відберіть ключові факти й цифри.</li>
+                    <li>Оберіть шаблон відповідно до структури даних.</li>
+                    <li>Оформіть шрифти, заголовки, піктограми та вирівнювання.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <details class="practice-drawer">
+              <summary><i data-lucide="clipboard-check" aria-hidden="true"></i> Практичне завдання до розділу 5</summary>
+              <div class="practice-body">
+                <p>1) «Шпигунське кодування»: скористайтеся тренажером нижче, зашифруйте власне слово зі зсувом 4 і запропонуйте однокласнику його декодувати. 2) Перетворіть текстовий опис вашого улюбленого предмета чи історичної події на схему або хронологічну інфографіку з 5 ключових фактів.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- Інтерактивна лабораторія 5: Шифрувальник -->
+          <div class="lab-panel" aria-label="Тренажер кодування та декодування повідомлень">
+            <div class="stamp-row">
+              <span class="stamp">Інтерактивна лабораторія 5</span>
+              <span class="kpi-label">Шпигунський шифрувальник (шифр Цезаря для української абетки)</span>
+            </div>
+            <div class="lab-controls-grid">
+              <div class="field-group">
+                <label class="field-label" for="cipher-input">Відкрите повідомлення</label>
+                <input class="riso-input" type="text" id="cipher-input" value="ІНФОРМАТИКА" maxlength="32" oninput="updateCipher()">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="cipher-shift">Зсув ключа (1–10 літер)</label>
+                <input class="riso-input" type="number" id="cipher-shift" min="1" max="10" value="3" oninput="updateCipher()">
+              </div>
+            </div>
+            <div class="audit-result is-warn" id="cipher-output" aria-live="polite">
+              <strong>Закодоване повідомлення: ЛРЧСТПГХЛНГ</strong>
+              <span>Кожна літера української абетки зсунута вперед на 3 позиції. Щоб розкодувати — зсуньте у зворотному напрямку.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== ФЛЕШ-КАРТКИ ==================== -->
+      <section class="chapter-section" id="sec-flashcards">
+        <div class="chapter-header">
+          <span class="stamp">Швидке повторення перед контрольною</span>
+          <h2 class="misregister chapter-heading">Флеш-картки ключових термінів</h2>
+          <p class="chapter-intro">
+            25 головних понять з усіх 5 розділів підручника. Натисніть на картку, щоб переглянути визначення, та позначайте засвоєні терміни — ваш прогрес збережеться автоматично.
+          </p>
+        </div>
+
+        <div class="lab-controls-grid">
+          <div class="field-group">
+            <label class="field-label" for="fc-filter">Фільтр за розділом</label>
+            <select class="riso-select" id="fc-filter" onchange="filterFlashcards()">
+              <option value="all">Усі розділи (25 термінів)</option>
+              <option value="1">Розділ 1: Презентації (5)</option>
+              <option value="2">Розділ 2: Інформаційні системи (5)</option>
+              <option value="3">Розділ 3: Спілкування онлайн (5)</option>
+              <option value="4">Розділ 4: Алгоритми у Scratch (5)</option>
+              <option value="5">Розділ 5: Інформаційна мозаїка (5)</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn--outline" onclick="shuffleFlashcards()">Перемішати</button>
+            <button type="button" class="btn btn--outline" id="fc-unlearned-btn" onclick="toggleUnlearnedOnly()">Лише невивчені</button>
+          </div>
+        </div>
+
+        <div class="flashcard-stage">
+          <div class="flashcard-box" id="flashcard-box" tabindex="0" role="button" aria-pressed="false" onclick="flipFlashcard()" onkeydown="handleFlashcardKey(event)">
+            <div class="stamp-row" style="justify-content:space-between; width:100%;">
+              <span class="stamp" id="fc-badge">Розділ 1 · 1 / 25</span>
+              <span class="kpi-label" id="fc-status-label">Натисніть, щоб перевернути</span>
+            </div>
+            <div id="fc-content">
+              <div class="flashcard-term" id="fc-term">Комп'ютерна презентація</div>
+            </div>
+            <div class="kpi-label" style="color:var(--tertiary);" id="fc-hint">Лицьовий бік · Термін</div>
+          </div>
+        </div>
+
+        <div class="btn-row" style="justify-content:space-between;">
+          <div class="btn-row">
+            <button type="button" class="btn btn--outline" onclick="prevFlashcard()">Попередня</button>
+            <button type="button" class="btn btn--outline" onclick="nextFlashcard()">Наступна</button>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn--secondary" onclick="markFlashcard('review')">Повторити пізніше</button>
+            <button type="button" class="btn btn--primary" onclick="markFlashcard('known')">Знаю впевнено</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== ПІДСУМКОВИЙ ТЕСТ ==================== -->
+      <section class="chapter-section" id="sec-quiz">
+        <div class="chapter-header">
+          <span class="stamp">Контрольна самоперевірка</span>
+          <h2 class="misregister chapter-heading">Підсумковий інтерактивний тест</h2>
+          <p class="chapter-intro">
+            15 запитань (по 3 з кожного розділу підручника). Після вибору відповіді ви одразу отримаєте детальне пояснення та побачите підсумковий графік знань за розділами.
+          </p>
+        </div>
+
+        <div class="lab-controls-grid">
+          <div class="field-group">
+            <label class="field-label" for="quiz-scope">Охоплення тесту</label>
+            <select class="riso-select" id="quiz-scope" onchange="changeQuizScope()">
+              <option value="all">Повний підсумковий тест (15 запитань)</option>
+              <option value="1">Лише Розділ 1: Презентації (3)</option>
+              <option value="2">Лише Розділ 2: Інформаційні системи (3)</option>
+              <option value="3">Лише Розділ 3: Спілкування онлайн (3)</option>
+              <option value="4">Лише Розділ 4: Scratch (3)</option>
+              <option value="5">Лише Розділ 5: Інформаційна мозаїка (3)</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn--outline" id="quiz-reset-btn" onclick="resetQuizInline(this)">Скинути результати</button>
+          </div>
+        </div>
+
+        <div class="quiz-card" id="quiz-container">
+          <div class="stamp-row" style="justify-content:space-between;">
+            <span class="stamp" id="quiz-progress-badge">Запитання 1 із 15</span>
+            <span class="kpi-label" id="quiz-chapter-tag">Розділ 1</span>
+          </div>
+          <h3 class="topic-title" id="quiz-question-text">Завантаження запитання…</h3>
+          <div class="quiz-options" id="quiz-options-list"></div>
+          <div class="quiz-feedback" id="quiz-feedback" style="display:none;" aria-live="polite"></div>
+          <div class="btn-row" style="justify-content:space-between;">
+            <button type="button" class="btn btn--outline" id="quiz-prev-btn" onclick="prevQuestion()">Назад</button>
+            <button type="button" class="btn btn--primary" id="quiz-next-btn" onclick="nextQuestion()">Наступне запитання</button>
+          </div>
+        </div>
+
+        <!-- Результати тесту та Overprint SVG-діаграма -->
+        <div class="ink-block" id="quiz-summary-panel">
+          <div class="stamp-row" style="justify-content:space-between; margin-bottom:var(--space-md);">
+            <span class="stamp">Аналітика по розділах</span>
+            <span class="kpi-label" id="quiz-grade-label">Оцінка за 12-бальною шкалою: —</span>
+          </div>
+          <p id="quiz-summary-text" style="margin:0 0 var(--space-md);">Відповідайте на запитання тесту — діаграма автоматично покаже ваші результати у кожному з 5 розділів курсу.</p>
+          <div class="chart-wrap">
+            <svg id="quiz-chart-svg" viewBox="0 0 600 200" width="100%" height="200" role="img" aria-label="Стовпчаста діаграма результатів по 5 розділах">
+              <line x1="50" y1="165" x2="570" y2="165" stroke="var(--outline)" stroke-width="2"/>
+              <line x1="50" y1="25" x2="570" y2="25" stroke="var(--outline-variant)" stroke-width="1" stroke-dasharray="4 4"/>
+              <line x1="50" y1="71" x2="570" y2="71" stroke="var(--outline-variant)" stroke-width="1" stroke-dasharray="4 4"/>
+              <line x1="50" y1="118" x2="570" y2="118" stroke="var(--outline-variant)" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="12" y="30" fill="var(--on-surface-variant)" font-family="var(--font-label)" font-size="11">100%</text>
+              <text x="18" y="122" fill="var(--on-surface-variant)" font-family="var(--font-label)" font-size="11">33%</text>
+              <text x="24" y="168" fill="var(--on-surface-variant)" font-family="var(--font-label)" font-size="11">0%</text>
+              <g id="quiz-chart-bars"></g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer-source">
+        <strong>Джерело навчальних матеріалів:</strong>
+        <span>Складено за матеріалами підручника «Інформатика: підручник для 6 класу закладів загальної середньої освіти» (автор Джон Ендрю Біос, 2023).</span>
+      </footer>
+    </main>
+  </div>
+
+  <api-shim></api-shim>
+  <script>
+    /* ======================== ДАНІ КУРСУ ======================== */
+    const TOTAL_TOPICS = 15;
+
+    const FLASHCARDS = [
+      { ch: 1, term: `Комп'ютерна презентація`, def: `Представлення публіці нової ідеї, проєкту чи продукту за допомогою технічних засобів, поділене на послідовність слайдів.` },
+      { ch: 1, term: `Правило Гая Кавасакі (10/20/30)`, def: `Рекомендація для переконливих презентацій: максимум 10 слайдів, тривалість до 20 хвилин, шрифт не дрібніший за 30 пт.` },
+      { ch: 1, term: `Ліцензія Creative Commons`, def: `Тип ліцензії, що дозволяє вільно використовувати чужі зображення, музику чи тексти за умови обов'язкового зазначення автора.` },
+      { ch: 1, term: `Анімація vs Перехід`, def: `Перехід — це рух під час зміни одного слайда на інший, а анімація — спеціальний ефект для окремого об'єкта всередині слайда (Вхід, Виокремлення, Вихід, Шляхи переміщення).` },
+      { ch: 1, term: `SmartArt і Діаграми`, def: `SmartArt ілюструє структури, цикли та схеми (напр. Ієрархія), а діаграми графічно відображають числові табличні дані (стовпчаста, секторна, лінійчата, гістограма).` },
+
+      { ch: 2, term: `Інформаційна система (ІС)`, def: `Сукупність взаємопов'язаних об'єктів, що збирають, передають, опрацьовують і зберігають дані. Може бути технічною, біологічною або соціальною.` },
+      { ch: 2, term: `Драйвер`, def: `Спеціальна системна програма, яка забезпечує взаємодію підключеного апаратного пристрою з операційною системою.` },
+      { ch: 2, term: `Системне, Прикладне та Інструментальне ПЗ`, def: `Системне керує комп'ютером (ОС, драйвери, антивіруси), прикладне вирішує задачі користувача (редактори, ігри), інструментальне слугує для розробки нових програм (Scratch).` },
+      { ch: 2, term: `Хмарні технології та Data-центр`, def: `Технологія зберігання й обробки даних у віддаленому середовищі через інтернет на фізичних серверах і накопичувачах у спеціальних будівлях — Data-центрах.` },
+      { ch: 2, term: `Інтернет речей (IoT) та мікроконтролер`, def: `Мережа розумних пристроїв із датчиками, які обмінюються даними та приймають рішення. Мікроконтролер — мікрокомп'ютер на платі для керування таким пристроєм.` },
+
+      { ch: 3, term: `Модель клієнт–сервер`, def: `Архітектура мережі, де пристрій користувача (клієнт через браузер) надсилає запит на вебсервер, а сервер опрацьовує його та повертає відповідь.` },
+      { ch: 3, term: `Інформаційний пакет`, def: `Фрагмент даних для передачі мережею, що складається із Заголовка (адреси, протокол, номер), Корисних даних і Трейлера (маркера кінця пакета).` },
+      { ch: 3, term: `Персональні дані`, def: `Будь-які відомості про особу, за якими її можна ідентифікувати (ПІБ, телефон, адреса, школа, фінансовий стан). Потребують конфіденційного захисту.` },
+      { ch: 3, term: `Нетикет і Кібербулінг`, def: `Нетикет — правила ввічливої поведінки в мережі. Кібербулінг — повторюване цькування чи залякування за допомогою цифрових пристроїв.` },
+      { ch: 3, term: `Цифровий слід`, def: `Уся інформація про дії користувача в мережі: пасивний слід (збирається автоматично) та активний (дані, які людина публікує свідомо).` },
+
+      { ch: 4, term: `Блоки Дотику в Scratch`, def: `Шестикутні блоки категорії Датчики («торкається ()?», «торкається кольору ()?»), що повертають логічне значення Істинно (True) або Хибно (False).` },
+      { ch: 4, term: `Цикл «повторити до»`, def: `Блок керування, який повторює вкладені команди доти, поки умова є хибною, і зупиняється, щойно умова стане істинною.` },
+      { ch: 4, term: `Змінна`, def: `Іменований контейнер у пам'яті програми для збереження числових або текстових (рядкових) значень, які можуть змінюватися під час виконання гри.` },
+      { ch: 4, term: `Координатна сітка сцени Scratch`, def: `Поле сцени з центром (0, 0), де горизонтальна вісь X змінюється від −240 до +240, а вертикальна вісь Y — від −180 до +180.` },
+      { ch: 4, term: `Логічні оператори (І, АБО, НЕ)`, def: `«І» потребує істинності обох умов; «АБО» — хоча б однієї; «НЕ» інвертує (перевертає) значення умови.` },
+
+      { ch: 5, term: `Піраміда: Дані → Інформація → Знання → Мудрість`, def: `Опрацювання даних утворює інформацію, систематизація інформації — знання, а вміння застосовувати знання на практиці дає мудрість.` },
+      { ch: 5, term: `Інформаційні процеси`, def: `П'ять базових операцій з відомостями: введення (зі збиранням), опрацювання (разом із захистом), зберігання на носіях, передавання каналом зв'язку та виведення.` },
+      { ch: 5, term: `Фейк`, def: `Навмисно спотворене повідомлення або вигаданий факт; розпізнається за відсутністю надійних джерел, анонімністю та емоційною маніпуляцією.` },
+      { ch: 5, term: `Класифікація та програмний об'єкт`, def: `Класифікація — поділ об'єктів на групи за ознаками. Програмний об'єкт (папка, спрайт, лист) має властивості (ім'я, розмір) та набір дій над ним.` },
+      { ch: 5, term: `Інфографіка та 3D-моделювання`, def: `Інфографіка — наочна візуалізація даних (хронологічна, статистична, процесуальна тощо). 3D-модель — об'ємний цифровий образ, придатний для 3D-друку (стереолітографії).` }
+    ];
+
+    const QUIZ_QUESTIONS = [
+      // Розділ 1
+      {
+        ch: 1,
+        q: `Згідно з правилом Гая Кавасакі (10 / 20 / 30), яким має бути мінімальний розмір шрифту на слайді?`,
+        opts: [`Не дрібнішим за 14 пт`, `Не дрібнішим за 20 пт`, `Не дрібнішим за 30 пт`, `Рівно 12 пт для основного тексту`],
+        ans: 2,
+        exp: `Гай Кавасакі радить: максимум 10 слайдів, тривалість до 20 хвилин і шрифт не дрібніший за 30 пт, щоб текст легко читали навіть з останніх рядів.`
+      },
+      {
+        ch: 1,
+        q: `Які маркери зображення потрібно перетягувати в PowerPoint, щоб змінити його розмір БЕЗ спотворення пропорцій?`,
+        opts: [`Лише бічні маркери`, `Тільки верхній центральний маркер`, `Чотири кутові маркери`, `Іконку обертання у верхній частині`],
+        ans: 2,
+        exp: `Бічні маркери розтягують або стискають картинку лише по одній осі, тому для збереження пропорцій завжди використовують кутові маркери.`
+      },
+      {
+        ch: 1,
+        q: `Який тип діаграми найкраще обрати, якщо потрібно показати частини одного цілого (наприклад, частки витрат чи опитування)?`,
+        opts: [`Секторна діаграма`, `SmartArt Цикл`, `Лінійчата діаграма`, `Гістограма`],
+        ans: 0,
+        exp: `Секторна (кругова) діаграма призначена саме для відображення часток одного цілого та порівняння їхнього співвідношення.`
+      },
+      // Розділ 2
+      {
+        ch: 2,
+        q: `Що означає жовтий знак оклику поруч із пристроєм у вікні «Диспетчер пристроїв» Windows?`,
+        opts: [`Пристрій заряджений на 100%`, `Для пристрою не встановлено або пошкоджено драйвер`, `Пристрій синхронізовано з OneDrive`, `Пристрій є елементом інтернету речей`],
+        ans: 1,
+        exp: `Знак оклику в Диспетчері пристроїв сигналізує, що операційна система не має потрібного драйвера для коректної роботи обладнання.`
+      },
+      {
+        ch: 2,
+        q: `До якої категорії програмного забезпечення належить середовище програмування Scratch?`,
+        opts: [`Системне ПЗ`, `Прикладне ПЗ`, `Інструментальне ПЗ`, `Утиліта оптимізації диска`],
+        ans: 2,
+        exp: `Середовища програмування для створення інших програм утворюють групу інструментального програмного забезпечення.`
+      },
+      {
+        ch: 2,
+        q: `Який рівень спільного доступу до онлайн-документа в OneDrive дозволяє користувачеві лише залишати коментарі, але не змінювати сам текст?`,
+        opts: [`Редагування`, `Рецензування`, `Перегляд`, `Адміністрування`],
+        ans: 1,
+        exp: `Режим «Рецензування» дає право коментувати й пропонувати правки, тоді як «Перегляд» дозволяє лише читати, а «Редагування» — змінювати документ.`
+      },
+      // Розділ 3
+      {
+        ch: 3,
+        q: `Які три складові має інформаційний пакет під час передавання даних мережею?`,
+        opts: [`Запит, відповідь і провайдер`, `Заголовок, корисні дані та трейлер`, `Пароль, логін і хеш`, `Модем, кабель і сервер`],
+        ans: 1,
+        exp: `Кожен мережевий пакет складається із Заголовка (адреси, протокол, номер), Корисних даних і Трейлера (маркера завершення пакета).`
+      },
+      {
+        ch: 3,
+        q: `Як у мережевому етикеті (нетикеті) сприймається повідомлення, написане ПОВНІСТЮ ВЕЛИКИМИ ЛІТЕРАМИ?`,
+        opts: [`Як ознака офіційної поваги`, `Як крик або агресія`, `Як підтвердження ліцензії Creative Commons`, `Як налаштування прихованої копії`],
+        ans: 1,
+        exp: `За правилами нетикету суцільні великі літери в чатах і листах прирівнюються до крику, тому їх слід уникати.`
+      },
+      {
+        ch: 3,
+        q: `Яке правило є правильним щодо формування пасивного цифрового сліду?`,
+        opts: [`Користувач свідомо публікує селфі у блозі`, `Дані про дії в мережі збираються автоматично без відома власника`, `Користувач сам видаляє історію браузера`, `Це пароль, який змінюють раз на 3 місяці`],
+        ans: 1,
+        exp: `Пасивний цифровий слід формується автоматично під час відвідування сайтів, тоді як активний — коли ви самі публікуєте пости чи коментарі.`
+      },
+      // Розділ 4
+      {
+        ch: 4,
+        q: `У яких межах змінюються координати X та Y на сцені в Scratch?`,
+        opts: [`X: від 0 до 100, Y: від 0 до 100`, `X: від −240 до +240, Y: від −180 до +180`, `X: від −180 до +180, Y: від −240 до +240`, `X: від −500 до +500, Y: від −500 до +500`],
+        ans: 1,
+        exp: `Центр сцени Scratch має координати (0, 0), ширина сцени становить 480 пікселів (від −240 до +240), висота — 360 пікселів (від −180 до +180).`
+      },
+      {
+        ch: 4,
+        q: `Коли припиняє роботу цикл «повторити до <умова>» у Scratch?`,
+        opts: [`Рівно через 10 повторень`, `Ніколи, поки не натиснуто червону кнопку Стоп`, `У момент, коли вказана умова стає істинною (True)`, `Одразу після запуску зеленого прапорця`],
+        ans: 2,
+        exp: `Цикл «повторити до» виконується, поки умова хибна, і завершується, щойно умова набуде значення Істинно (True).`
+      },
+      {
+        ch: 4,
+        q: `За яких умов логічний оператор «<А> і <Б>» повертає Істинно (True)?`,
+        opts: [`Коли виконується хоча б одна з умов`, `Коли НЕ виконується жодна умова`, `Лише коли виконуються ОБИДВІ умови одночасно`, `Лише коли перша умова хибна`],
+        ans: 2,
+        exp: `Оператор «і» вимагає одночасного виконання обох умов (А та Б), на відміну від «або», де достатньо однієї істинної умови.`
+      },
+      // Розділ 5
+      {
+        ch: 5,
+        q: `У якій послідовності формується пізнання згідно зі схемою підручника?`,
+        opts: [`Інформація → Дані → Мудрість → Знання`, `Дані → Інформація → Знання → Мудрість`, `Знання → Повідомлення → Дані → Інфографіка`, `Мудрість → Знання → Дані → Інформація`],
+        ans: 1,
+        exp: `Опрацювання даних дає інформацію, систематизація інформації — знання, а вміння застосовувати знання веде до мудрості.`
+      },
+      {
+        ch: 5,
+        q: `Яка ознака НЕ є характерною для фейкового повідомлення?`,
+        opts: [`Анонімні або відсутні джерела`, `Видавання особистої думки чи емоцій за факт`, `Посилання на офіційні документи й перевірені першоджерела`, `Лінк на маловідомий підозрілий сайт`],
+        ans: 2,
+        exp: `Надійні перевірені першоджерела підтверджують достовірність новини, тоді як фейки приховують авторів та тиснуть на емоції.`
+      },
+      {
+        ch: 5,
+        q: `Який вид інфографіки найкраще підходить для висвітлення історичних подій або біографій у часовій послідовності?`,
+        opts: [`Географічна`, `Статистична`, `Хронологічна`, `Інфографічне резюме`],
+        ans: 2,
+        exp: `Хронологічна інфографіка спеціально призначена для показу подій, етапів розвитку чи ретроспектив уздовж лінії часу.`
+      }
+    ];
+
+    /* ======================== СТАН ПРОГРАМИ ======================== */
+    const state = {
+      completedTopics: [],
+      flashcardStatus: {},   // { index: 'known' | 'review' }
+      quizAnswers: {},       // { questionIndex: chosenOptionIndex }
+      scratchX: 0,
+      scratchY: 0
+    };
+
+    let fcFilteredIndices = FLASHCARDS.map((_, i) => i);
+    let fcCursor = 0;
+    let fcFlipped = false;
+    let fcUnlearnedOnly = false;
+
+    let quizFilteredIndices = QUIZ_QUESTIONS.map((_, i) => i);
+    let quizCursor = 0;
+
+    async function persistState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+          await window.notebookAppApi.setAppState({
+            completedTopics: state.completedTopics,
+            flashcardStatus: state.flashcardStatus,
+            quizAnswers: state.quizAnswers,
+            scratchX: state.scratchX,
+            scratchY: state.scratchY
+          });
+        }
+      } catch (e) {
+        // Silent fallback in preview
+      }
+    }
+
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (Array.isArray(saved.completedTopics)) state.completedTopics = saved.completedTopics;
+            if (saved.flashcardStatus && typeof saved.flashcardStatus === 'object') state.flashcardStatus = saved.flashcardStatus;
+            if (saved.quizAnswers && typeof saved.quizAnswers === 'object') state.quizAnswers = saved.quizAnswers;
+            if (typeof saved.scratchX === 'number') state.scratchX = saved.scratchX;
+            if (typeof saved.scratchY === 'number') state.scratchY = saved.scratchY;
+          }
+        }
+      } catch (e) {
+        // Fallback if no host shim
+      }
+
+      syncTopicsUI();
+      evaluatePresentation();
+      updatePacketPreview();
+      renderScratchSprite();
+      evalScratchLogic();
+      updateCipher();
+      renderFlashcard();
+      renderQuizQuestion();
+      renderQuizSummary();
+
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    /* ======================== ТЕМИ КУРСУ ======================== */
+    function toggleTopic(topicId) {
+      const idx = state.completedTopics.indexOf(topicId);
+      if (idx === -1) {
+        state.completedTopics.push(topicId);
+      } else {
+        state.completedTopics.splice(idx, 1);
+      }
+      syncTopicsUI();
+      persistState();
+    }
+
+    function syncTopicsUI() {
+      const buttons = document.querySelectorAll('[data-topic-id]');
+      const total = buttons.length || TOTAL_TOPICS;
+      buttons.forEach((btn) => {
+        const id = btn.getAttribute('data-topic-id');
+        const isDone = state.completedTopics.includes(id);
+        btn.classList.toggle('is-done', isDone);
+        const span = btn.querySelector('span');
+        if (span) {
+          span.textContent = isDone ? `Вивчено` : `Позначити вивченим`;
+        }
+      });
+
+      const count = state.completedTopics.filter((id) => document.querySelector(`[data-topic-id="${id}"]`)).length;
+      const pct = Math.round((count / total) * 100);
+
+      const kpiTopics = document.getElementById('kpi-topics');
+      if (kpiTopics) kpiTopics.textContent = `${count} / ${total}`;
+
+      const fill = document.getElementById('aside-progress-fill');
+      if (fill) fill.style.width = `${pct}%`;
+
+      const asideText = document.getElementById('aside-progress-text');
+      if (asideText) asideText.textContent = `${count} із ${total} модулів (${pct}%)`;
+    }
+
+    /* ======================== ЛАБОРАТОРІЯ 1: ПРЕЗЕНТАЦІЯ ======================== */
+    function evaluatePresentation() {
+      const slidesEl = document.getElementById('pres-slides');
+      const fontEl = document.getElementById('pres-font');
+      const wordsEl = document.getElementById('pres-words');
+      const videoEl = document.getElementById('pres-video');
+      const box = document.getElementById('pres-audit-box');
+      if (!slidesEl || !fontEl || !wordsEl || !videoEl || !box) return;
+
+      const slides = Number(slidesEl.value) || 0;
+      const font = Number(fontEl.value) || 0;
+      const words = Number(wordsEl.value) || 0;
+      const video = Number(videoEl.value) || 0;
+
+      const issues = [];
+      if (slides > 10) issues.push(`слайдів більше 10 (правило Гая Кавасакі рекомендує до 10)`);
+      if (font < 30) issues.push(`шрифт ${font} пт замалий (мінімум за правилом 10/20/30 — 30 пт)`);
+      if (words > 8) issues.push(`понад 8 слів у рядку (порушує правило макета 2/4/8)`);
+      if (video > 60) issues.push(`відео довше 60 секунд може розсіяти увагу аудиторії`);
+
+      box.className = 'audit-result';
+      if (issues.length === 0) {
+        box.classList.add('is-good');
+        box.innerHTML = `<strong>Вердикт: збалансована презентація.</strong><span>Усі параметри відповідають правилам 10/20/30 і 2/4/8: текст читабельний, ритм виступу втримає увагу слухачів.</span>`;
+      } else if (issues.length === 1) {
+        box.classList.add('is-warn');
+        box.innerHTML = `<strong>Вердикт: є 1 зауваження.</strong><span>Зверніть увагу: ${issues[0]}.</span>`;
+      } else {
+        box.classList.add('is-bad');
+        box.innerHTML = `<strong>Вердикт: потрібно спростити макет (${issues.length} зауваження).</strong><span>Виявлено: ${issues.join('; ')}.</span>`;
+      }
+    }
+
+    /* ======================== ЛАБОРАТОРІЯ 2: КЛАСИФІКАТОР ПЗ ======================== */
+    function checkSoftwareMatch() {
+      const selEl = document.getElementById('sw-select');
+      const guessEl = document.getElementById('sw-guess');
+      const fb = document.getElementById('sw-feedback');
+      if (!selEl || !guessEl || !fb) return;
+
+      const expected = selEl.value;
+      const guess = guessEl.value;
+      fb.className = 'audit-result';
+
+      if (expected === guess) {
+        fb.classList.add('is-good');
+        const notes = {
+          sys: `Антивіруси, драйвери та архіватори керують роботою самого комп'ютера й захищають його — це системне ПЗ.`,
+          app: `Редактори та месенджери допомагають користувачеві вирішувати щоденні особисті задачі — це прикладне ПЗ.`,
+          inst: `Scratch призначений для створення власних програм та ігор, тому це інструментальне ПЗ.`
+        };
+        fb.innerHTML = `<strong>Правильно!</strong><span>${notes[expected]}</span>`;
+      } else {
+        fb.classList.add('is-bad');
+        fb.innerHTML = `<strong>Спробуйте ще раз.</strong><span>Подумайте, чим займається обрана програма: обслуговує «залізо» (Системне), допомагає в роботі/дозвіллі (Прикладне) чи створює нові програми (Інструментальне).</span>`;
+      }
+    }
+
+    /* ======================== ЛАБОРАТОРІЯ 3: МЕРЕЖЕВИЙ ПАКЕТ ======================== */
+    function updatePacketPreview() {
+      const msgEl = document.getElementById('pkt-msg');
+      const protoEl = document.getElementById('pkt-proto');
+      const headText = document.getElementById('pkt-head-text');
+      const dataText = document.getElementById('pkt-data-text');
+      if (!msgEl || !protoEl || !headText || !dataText) return;
+
+      const msg = msgEl.value.trim() || `(порожньо)`;
+      const proto = protoEl.value;
+      headText.textContent = `Від: Клієнт → Кому: Сервер · ${proto} · Пакет №1`;
+      dataText.textContent = `«${msg}» (${msg.length} симв.)`;
+    }
+
+    function simulatePacketSend(lost) {
+      updatePacketPreview();
+      const status = document.getElementById('pkt-status');
+      if (!status) return;
+      status.className = 'audit-result';
+      if (lost) {
+        status.classList.add('is-bad');
+        status.innerHTML = `<strong>Пакет №1 втрачено в каналі зв'язку!</strong><span>Отримувач не підтвердив прийом за трейлером. За протоколом система виконує повторну відправку пакета до повного доставлення.</span>`;
+      } else {
+        status.classList.add('is-good');
+        status.innerHTML = `<strong>Пакет №1 успішно отримано сервером!</strong><span>Заголовок перевірено, корисні дані розпаковано, трейлер підтвердив цілісність повідомлення.</span>`;
+      }
+    }
+
+    /* ======================== ЛАБОРАТОРІЯ 4: SCRATCH СЦЕНА ======================== */
+    function renderScratchSprite() {
+      const sprite = document.getElementById('scratch-sprite');
+      const coords = document.getElementById('scratch-coords');
+      const touch = document.getElementById('scratch-touch-status');
+      if (!sprite || !coords || !touch) return;
+
+      // SVG Y axis is inverted relative to Scratch Y
+      sprite.setAttribute('transform', `translate(${state.scratchX}, ${-state.scratchY})`);
+      coords.textContent = `X = ${state.scratchX}, Y = ${state.scratchY}`;
+
+      const dist = Math.hypot(state.scratchX - 140, state.scratchY - (-80));
+      const isTouching = dist <= 38;
+      touch.textContent = isTouching
+        ? `Датчик: торкається Цілі? — Істинно (True)!`
+        : `Датчик: торкається Цілі? — Хибно (False) (до цілі ${Math.round(dist)} пкс)`;
+      touch.style.color = isTouching ? `var(--positive)` : `var(--on-surface-variant)`;
+    }
+
+    function moveScratch(dx, dy) {
+      state.scratchX = Math.max(-220, Math.min(220, state.scratchX + dx));
+      state.scratchY = Math.max(-160, Math.min(160, state.scratchY + dy));
+      renderScratchSprite();
+      persistState();
+    }
+
+    function setScratch(x, y) {
+      state.scratchX = x;
+      state.scratchY = y;
+      renderScratchSprite();
+      persistState();
+    }
+
+    function evalScratchLogic() {
+      const aEl = document.getElementById('logic-a');
+      const bEl = document.getElementById('logic-b');
+      const out = document.getElementById('logic-output');
+      if (!aEl || !bEl || !out) return;
+
+      const a = aEl.checked;
+      const b = bEl.checked;
+      const fmt = (val) => (val ? `Істинно` : `Хибно`);
+      out.textContent = `А і Б = ${fmt(a && b)} · А або Б = ${fmt(a || b)} · не А = ${fmt(!a)}`;
+    }
+
+    /* ======================== ЛАБОРАТОРІЯ 5: ШИФРУВАЛЬНИК ======================== */
+    const UKR_ALPHA = `АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ`;
+
+    function updateCipher() {
+      const inp = document.getElementById('cipher-input');
+      const shiftEl = document.getElementById('cipher-shift');
+      const out = document.getElementById('cipher-output');
+      if (!inp || !shiftEl || !out) return;
+
+      const raw = inp.value.toUpperCase();
+      let shift = parseInt(shiftEl.value, 10);
+      if (isNaN(shift) || shift < 1) shift = 1;
+      if (shift > 10) shift = 10;
+
+      let encoded = ``;
+      for (let i = 0; i < raw.length; i++) {
+        const ch = raw[i];
+        const idx = UKR_ALPHA.indexOf(ch);
+        if (idx === -1) {
+          encoded += ch;
+        } else {
+          encoded += UKR_ALPHA[(idx + shift) % UKR_ALPHA.length];
+        }
+      }
+      out.innerHTML = `<strong>Закодоване повідомлення: ${encoded || `(введіть текст)`}</strong><span>Кожна літера української абетки зсунута вперед на ${shift} поз. Для декодування виконайте зворотний зсув.</span>`;
+    }
+
+    /* ======================== ФЛЕШ-КАРТКИ ======================== */
+    function filterFlashcards() {
+      const filterEl = document.getElementById('fc-filter');
+      const val = filterEl ? filterEl.value : 'all';
+
+      fcFilteredIndices = FLASHCARDS.map((c, i) => ({ c, i }))
+        .filter(({ c, i }) => {
+          const chMatch = val === 'all' || String(c.ch) === val;
+          const unlearnedMatch = !fcUnlearnedOnly || state.flashcardStatus[i] !== 'known';
+          return chMatch && unlearnedMatch;
+        })
+        .map(({ i }) => i);
+
+      fcCursor = 0;
+      fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function toggleUnlearnedOnly() {
+      fcUnlearnedOnly = !fcUnlearnedOnly;
+      const btn = document.getElementById('fc-unlearned-btn');
+      if (btn) {
+        btn.classList.toggle('btn--secondary', fcUnlearnedOnly);
+        btn.classList.toggle('btn--outline', !fcUnlearnedOnly);
+      }
+      filterFlashcards();
+    }
+
+    function shuffleFlashcards() {
+      for (let i = fcFilteredIndices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = fcFilteredIndices[i];
+        fcFilteredIndices[i] = fcFilteredIndices[j];
+        fcFilteredIndices[j] = tmp;
+      }
+      fcCursor = 0;
+      fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function renderFlashcard() {
+      const box = document.getElementById('flashcard-box');
+      const badge = document.getElementById('fc-badge');
+      const statusLabel = document.getElementById('fc-status-label');
+      const content = document.getElementById('fc-content');
+      const hint = document.getElementById('fc-hint');
+      const kpiCards = document.getElementById('kpi-cards');
+
+      const knownTotal = Object.values(state.flashcardStatus).filter((v) => v === 'known').length;
+      if (kpiCards) kpiCards.textContent = `${knownTotal} / ${FLASHCARDS.length}`;
+
+      if (!box || !badge || !statusLabel || !content || !hint) return;
+
+      if (fcFilteredIndices.length === 0) {
+        box.classList.remove('is-flipped');
+        badge.textContent = `Усі картки вивчено!`;
+        statusLabel.textContent = `Фільтр порожній`;
+        content.innerHTML = `<div class="flashcard-def">Усі терміни в цій добірці позначені як засвоєні. Вимкніть фільтр «Лише невивчені», щоб повторити весь словник.</div>`;
+        hint.textContent = `Готово до контрольної`;
+        return;
+      }
+
+      if (fcCursor >= fcFilteredIndices.length) fcCursor = 0;
+      const cardIdx = fcFilteredIndices[fcCursor];
+      const card = FLASHCARDS[cardIdx];
+      const st = state.flashcardStatus[cardIdx];
+
+      box.classList.toggle('is-flipped', fcFlipped);
+      box.setAttribute('aria-pressed', fcFlipped ? 'true' : 'false');
+      badge.textContent = `Розділ ${card.ch} · ${fcCursor + 1} / ${fcFilteredIndices.length}`;
+      statusLabel.textContent = st === 'known' ? `Статус: Знаю впевнено` : st === 'review' ? `Статус: Повторити` : `Натисніть, щоб перевернути`;
+
+      if (fcFlipped) {
+        content.innerHTML = `<div class="flashcard-def">${card.def}</div>`;
+        hint.textContent = `Зворотний бік · Визначення`;
+      } else {
+        content.innerHTML = `<div class="flashcard-term">${card.term}</div>`;
+        hint.textContent = `Лицьовий бік · Натисніть для перегляду визначення`;
+      }
+    }
+
+    function flipFlashcard() {
+      if (fcFilteredIndices.length === 0) return;
+      fcFlipped = !fcFlipped;
+      renderFlashcard();
+    }
+
+    function handleFlashcardKey(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        flipFlashcard();
+      }
+    }
+
+    function nextFlashcard() {
+      if (fcFilteredIndices.length === 0) return;
+      fcCursor = (fcCursor + 1) % fcFilteredIndices.length;
+      fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      if (fcFilteredIndices.length === 0) return;
+      fcCursor = (fcCursor - 1 + fcFilteredIndices.length) % fcFilteredIndices.length;
+      fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function markFlashcard(status) {
+      if (fcFilteredIndices.length === 0) return;
+      const cardIdx = fcFilteredIndices[fcCursor];
+      state.flashcardStatus[cardIdx] = status;
+      persistState();
+      if (fcUnlearnedOnly && status === 'known') {
+        filterFlashcards();
+      } else {
+        nextFlashcard();
+      }
+    }
+
+    /* ======================== ПІДСУМКОВИЙ ТЕСТ ======================== */
+    function changeQuizScope() {
+      const scopeEl = document.getElementById('quiz-scope');
+      const val = scopeEl ? scopeEl.value : 'all';
+      quizFilteredIndices = QUIZ_QUESTIONS.map((q, i) => ({ q, i }))
+        .filter(({ q }) => val === 'all' || String(q.ch) === val)
+        .map(({ i }) => i);
+      quizCursor = 0;
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      const badge = document.getElementById('quiz-progress-badge');
+      const chTag = document.getElementById('quiz-chapter-tag');
+      const qText = document.getElementById('quiz-question-text');
+      const optsWrap = document.getElementById('quiz-options-list');
+      const fb = document.getElementById('quiz-feedback');
+      const prevBtn = document.getElementById('quiz-prev-btn');
+      const nextBtn = document.getElementById('quiz-next-btn');
+      if (!badge || !chTag || !qText || !optsWrap || !fb) return;
+
+      const qIdx = quizFilteredIndices[quizCursor];
+      const item = QUIZ_QUESTIONS[qIdx];
+      const chosen = state.quizAnswers[qIdx];
+      const hasAnswered = typeof chosen === 'number';
+
+      badge.textContent = `Запитання ${quizCursor + 1} із ${quizFilteredIndices.length}`;
+      chTag.textContent = `Розділ ${item.ch}`;
+      qText.textContent = item.q;
+
+      const letters = [`А`, `Б`, `В`, `Г`];
+      optsWrap.innerHTML = ``;
+      item.opts.forEach((optText, optIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-option';
+        if (hasAnswered) {
+          btn.disabled = true;
+          if (optIdx === item.ans) btn.classList.add('is-correct');
+          else if (optIdx === chosen) btn.classList.add('is-wrong');
+        }
+        btn.onclick = function () { selectQuizAnswer(qIdx, optIdx); };
+        btn.innerHTML = `<span class="quiz-letter">${letters[optIdx]}</span><span>${optText}</span>`;
+        optsWrap.appendChild(btn);
+      });
+
+      if (hasAnswered) {
+        const isCorrect = chosen === item.ans;
+        fb.style.display = 'block';
+        fb.className = `quiz-feedback ${isCorrect ? 'is-correct' : 'is-wrong'}`;
+        fb.innerHTML = `<strong>${isCorrect ? `Правильна відповідь!` : `Відповідь неточна.`}</strong> ${item.exp}`;
+      } else {
+        fb.style.display = 'none';
+      }
+
+      if (prevBtn) prevBtn.disabled = quizCursor === 0;
+      if (nextBtn) nextBtn.disabled = quizCursor >= quizFilteredIndices.length - 1;
+    }
+
+    function selectQuizAnswer(qIdx, optIdx) {
+      state.quizAnswers[qIdx] = optIdx;
+      persistState();
+      renderQuizQuestion();
+      renderQuizSummary();
+    }
+
+    function prevQuestion() {
+      if (quizCursor > 0) {
+        quizCursor -= 1;
+        renderQuizQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (quizCursor < quizFilteredIndices.length - 1) {
+        quizCursor += 1;
+        renderQuizQuestion();
+      }
+    }
+
+    function resetQuizInline(btn) {
+      if (btn && btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        btn.textContent = `Підтвердити скидання`;
+        return;
+      }
+      if (btn) {
+        btn.dataset.armed = 'false';
+        btn.textContent = `Скинути результати`;
+      }
+      state.quizAnswers = {};
+      quizCursor = 0;
+      persistState();
+      renderQuizQuestion();
+      renderQuizSummary();
+    }
+
+    function renderQuizSummary() {
+      const kpiQuiz = document.getElementById('kpi-quiz');
+      const kpiNote = document.getElementById('kpi-quiz-note');
+      const gradeLabel = document.getElementById('quiz-grade-label');
+      const summaryText = document.getElementById('quiz-summary-text');
+      const barsGroup = document.getElementById('quiz-chart-bars');
+
+      let answeredCount = 0;
+      let correctTotal = 0;
+      const byChapter = { 1: { c: 0, t: 0 }, 2: { c: 0, t: 0 }, 3: { c: 0, t: 0 }, 4: { c: 0, t: 0 }, 5: { c: 0, t: 0 } };
+
+      QUIZ_QUESTIONS.forEach((q, idx) => {
+        byChapter[q.ch].t += 1;
+        if (typeof state.quizAnswers[idx] === 'number') {
+          answeredCount += 1;
+          if (state.quizAnswers[idx] === q.ans) {
+            correctTotal += 1;
+            byChapter[q.ch].c += 1;
+          }
+        }
+      });
+
+      const pct = QUIZ_QUESTIONS.length > 0 ? Math.round((correctTotal / QUIZ_QUESTIONS.length) * 100) : 0;
+      const grade12 = Math.max(1, Math.round((correctTotal / QUIZ_QUESTIONS.length) * 12));
+
+      if (kpiQuiz) kpiQuiz.textContent = answeredCount > 0 ? `${correctTotal} / ${QUIZ_QUESTIONS.length}` : `—`;
+      if (kpiNote) kpiNote.textContent = answeredCount > 0 ? `виконано ${answeredCount} із ${QUIZ_QUESTIONS.length} (${pct}%)` : `15 контрольних запитань`;
+      if (gradeLabel) gradeLabel.textContent = answeredCount > 0 ? `Орієнтовна оцінка: ${grade12} балів із 12` : `Оцінка за 12-бальною шкалою: —`;
+
+      if (summaryText) {
+        if (answeredCount === 0) {
+          summaryText.textContent = `Відповідайте на запитання тесту — діаграма автоматично покаже ваші результати у кожному з 5 розділів курсу.`;
+        } else if (answeredCount < QUIZ_QUESTIONS.length) {
+          summaryText.textContent = `Опрацьовано ${answeredCount} із ${QUIZ_QUESTIONS.length} запитань. Поточна кількість правильних відповідей: ${correctTotal}.`;
+        } else {
+          summaryText.textContent = `Тест повністю завершено! Ваш результат: ${correctTotal} із ${QUIZ_QUESTIONS.length} (${pct}%), що відповідає ${grade12} балам за 12-бальною шкалою.`;
+        }
+      }
+
+      if (barsGroup) {
+        let svgHtml = ``;
+        const colors = [`var(--data-1)`, `var(--data-2)`, `var(--data-3)`, `var(--data-4)`, `var(--data-1)`];
+        for (let ch = 1; ch <= 5; ch++) {
+          const x = 75 + (ch - 1) * 100;
+          const ratio = byChapter[ch].t > 0 ? byChapter[ch].c / byChapter[ch].t : 0;
+          const barH = Math.round(ratio * 135);
+          const y = 165 - barH;
+          svgHtml += `<rect x="${x}" y="25" width="52" height="140" fill="var(--surface-container)" />`;
+          if (barH > 0) {
+            svgHtml += `<rect class="chart-mark" x="${x}" y="${y}" width="52" height="${barH}" fill="${colors[ch - 1]}" />`;
+          }
+          svgHtml += `<text x="${x + 26}" y="185" text-anchor="middle" fill="var(--on-surface)" font-family="var(--font-label)" font-size="12" font-weight="700">Розд. ${ch}</text>`;
+          svgHtml += `<text x="${x + 26}" y="${Math.max(18, y - 6)}" text-anchor="middle" fill="var(--on-surface)" font-family="var(--font-label)" font-size="12" font-weight="700">${byChapter[ch].c}/${byChapter[ch].t}</text>`;
+        }
+        barsGroup.innerHTML = svgHtml;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
